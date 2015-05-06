@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="MINA.FS" default="mina.fs" basedir=".">
+    <description>SeSDK Build File</description>
+    <property name="src" location="src" />
+    <property name="lib" location="lib" />
+	<property name="libsrc" location="libsrc" />	
+    <property name="bin" location="bin" />
+	  <property name="builtby" value="LiJun" />
+	  <property name="basesrc" value="**/com/seshenghuo" />	  
+	  <property name="mina.fs" value="mina/fileserver" />
+	<property name="mina.fs.src" value="${mina.fs}/src" />
+	  <property name="mina.fs.lib" value="${mina.fs}/lib" />
+	  <property name="mina.fs.bin" value="${mina.fs}/bin" />
+	  <property name="mina.fs.logs" value="${mina.fs}/logs" />
+	  <property name="mina.fs.jarfile" value="mina.fs.jar" />
+	  <property name="mina.fs.main" value="com.seshenghuo.mina.fs.FileServer" />
+	  
+	  <tstamp />
+	
+	  <path id="lib">
+	  	<fileset dir="${lib}">
+	  		<include name="*.jar" />
+	  		<include name="${java.home}\jre\lib\jfxrt.jar" />
+	  	</fileset>
+	  	<fileset dir="${libsrc}">
+            <include name="apache-mina-2.0.7/dist/mina-core-2.0.7.jar" />
+            <include name="slf4j-1.7.6/slf4j-api-1.7.6.jar" />
+            <include name="slf4j-1.7.6/slf4j-nop-1.7.6.jar" />
+        </fileset>
+	  </path>
+	
+    <target name="mina.fs" depends="compile,build.mina.fs,clean" description="mina.fs target">    
+        <echo>Building JAR files done...</echo>
+    </target>
+	
+    <target name="compile" depends="create" description="compile the source">
+      <echo>make bin dir and compile</echo>
+      <mkdir  dir="${bin}" />  
+	  <javac srcdir="${src}" destdir="${bin}">
+	  	<classpath refid="lib" />
+	  </javac>
+
+	  <delete file="${mina.fs.lib}/${mina.fs.jarfile}" />
+
+      <copy todir="${mina.fs.lib}">
+          <fileset dir="${src}">
+            <include name="mina_server.properties" />
+          	<include name="mina_codec.properties" />
+            <include name="log4j.properties" />            
+          </fileset>
+    	  <fileset dir="${libsrc}/apache-mina-2.0.7/dist">
+            <include name="mina-core-2.0.7.jar" />
+          </fileset>
+      	  <fileset dir="${libsrc}/slf4j-1.7.6">
+            <include name="slf4j-api-1.7.6.jar" />
+            <include name="slf4j-nop-1.7.6.jar" />
+          </fileset>
+      	  <fileset dir="${lib}">
+            <include name="log4j-1.2.14.jar" />
+          </fileset>
+      </copy>
+    	<copy todir="${mina.fs.src}">
+    		<fileset dir="${src}">
+	           <include name="${basesrc}/mina/MinaServerConfig.java" />
+    		   <include name="${basesrc}/mina/MinaCodecConfig.java" />
+	           <include name="${basesrc}/mina/fs/Commands.java" />
+	           <include name="${basesrc}/mina/fs/FileEntity.java" />
+	           <include name="${basesrc}/mina/fs/FileServer.java" />
+	           <include name="${basesrc}/mina/fs/FileServerIoHandler.java" />
+	           <include name="${basesrc}/mina/fs/codec/**" />
+	           <include name="${basesrc}/logger/L.java" />
+	           <include name="${basesrc}/util/Util.java" />
+	           <include name="${basesrc}/util/PropertiesUtil.java" />
+	           <include name="${basesrc}/util/Convert.java" />
+    		   <include name="${basesrc}/util/IPTools.java" /> 
+    		   <include name="${basesrc}/util/bean/IPRange.java" /> 
+	         </fileset>
+    	</copy>
+    </target>
+	
+	  <target name="build.mina.fs" description="build.mina.fs">
+	  	<echo>build the file server</echo>
+      <jar destfile="${mina.fs.lib}/${mina.fs.jarfile}" update="true">
+         <fileset dir="${bin}">
+           <include name="${basesrc}/mina/MinaServerConfig.class" />
+           <include name="${basesrc}/mina/MinaCodecConfig.class" />
+           <include name="${basesrc}/mina/fs/Commands.class" />
+           <include name="${basesrc}/mina/fs/FileEntity.class" />
+           <include name="${basesrc}/mina/fs/FileServer.class" />
+           <include name="${basesrc}/mina/fs/FileServerIoHandler.class" />
+           <include name="${basesrc}/mina/fs/codec/**" />
+           <include name="${basesrc}/logger/L.class" />
+           <include name="${basesrc}/util/Util.class" />
+           <include name="${basesrc}/util/PropertiesUtil.class" />
+           <include name="${basesrc}/util/Convert.class" />
+         	<include name="${basesrc}/util/IPTools.class" /> 
+         	<include name="${basesrc}/util/bean/IPRange.class" /> 
+         </fileset>
+         <manifest>  
+           <attribute name="Built-By" value="${builtby}" />
+           <attribute name="Built-Date" value="${TODAY}" />
+           <attribute name="Main-Class" value="${mina.fs.main}" /> 
+         </manifest> 
+      </jar>
+    </target>
+	
+    <target name="create" description="create project dirs">
+      <mkdir dir="${bin}" />
+  	  <mkdir dir="${mina.fs}" />
+      <mkdir dir="${mina.fs.src}" />
+  	  <mkdir dir="${mina.fs.lib}" />
+  	  <mkdir dir="${mina.fs.bin}" />
+  	  <mkdir dir="${mina.fs.logs}" />
+    </target>
+    
+    <target name="clean" description="clean up">
+      <echo>delete the bin dir</echo>
+      <delete dir="${bin}" />        
+    </target>
+</project>

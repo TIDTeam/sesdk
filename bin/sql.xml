@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mysql[
+    <!ELEMENT mysql     (sql+)>
+    <!ELEMENT sql       (#PCDATA)>
+    <!ATTLIST sql id    ID                              #REQUIRED>
+    <!ATTLIST sql cmd   (select|update|insert|delete)   #REQUIRED>
+    <!ATTLIST sql type  (sql|sp)                        #REQUIRED>
+]>
+
+<mysql>
+  <!-- 
+  <sql id="SQL123456" cmd="select|delete|insert|update" type="sql|sp">
+  <![CDATA[sql string]]>
+  </sql>
+  -->
+  <sql id="SQL100000" cmd="insert" type="sp">
+    <![CDATA[sp_ins_events(?,?,?,?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100001" cmd="insert" type="sp">
+    <![CDATA[sp_ins_life(?,?,?,?,?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100002" cmd="insert" type="sp">
+    <![CDATA[sp_ins_photos(?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100003" cmd="insert" type="sp">
+    <![CDATA[sp_ins_posts(?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100004" cmd="insert" type="sp">
+    <![CDATA[sp_ins_texts(?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100005" cmd="insert" type="sp">
+    <![CDATA[sp_ins_user_basic(?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100006" cmd="insert" type="sp">
+    <![CDATA[sp_ins_user_edu(?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100007" cmd="insert" type="sp">
+    <![CDATA[sp_ins_user_employment(?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100008" cmd="insert" type="sp">
+    <![CDATA[sp_ins_user_extra(?,?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100009" cmd="insert" type="sp">
+    <![CDATA[sp_ins_user_privacy(?,?,?,?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100010" cmd="insert" type="sp">
+    <![CDATA[sp_ins_user_work(?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100011" cmd="select" type="sp">
+    <![CDATA[sp_qry_events(?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100012" cmd="select" type="sp">
+    <![CDATA[sp_qry_life(?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100013" cmd="select" type="sp">
+    <![CDATA[sp_qry_photos(?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100014" cmd="select" type="sp">
+    <![CDATA[sp_qry_posts(?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100015" cmd="select" type="sp">
+    <![CDATA[sp_qry_text(?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100016" cmd="select" type="sp">
+    <![CDATA[sp_qry_user_basic(?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100017" cmd="select" type="sp">
+    <![CDATA[sp_qry_user_login(?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100018" cmd="select" type="sp">
+    <![CDATA[sp_qry_user_modify_passwd(?,?,?)]]>
+  </sql>
+  <sql id="SQL100019" cmd="update" type="sp">
+    <![CDATA[sp_upt_events(?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100020" cmd="update" type="sp">
+    <![CDATA[sp_upt_life(?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100021" cmd="update" type="sp">
+    <![CDATA[sp_upt_lovehit(?)]]>
+  </sql>
+  <sql id="SQL100022" cmd="update" type="sp">
+    <![CDATA[sp_upt_photos(?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100023" cmd="update" type="sp">
+    <![CDATA[sp_upt_posts(?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100024" cmd="update" type="sp">
+    <![CDATA[sp_upt_texts(?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100025" cmd="update" type="sp">
+    <![CDATA[sp_upt_user_basic(?,?,?)]]>
+  </sql>
+  <sql id="SQL100026" cmd="update" type="sp">
+    <![CDATA[sp_upt_user_edu(?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100027" cmd="update" type="sp">
+    <![CDATA[sp_upt_user_employment(?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100028" cmd="update" type="sp">
+    <![CDATA[sp_upt_user_extra(?,?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100029" cmd="update" type="sp">
+    <![CDATA[sp_upt_user_privacy(?,?,?,?,?,?,?,?,?,?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100030" cmd="update" type="sp">
+    <![CDATA[sp_upt_user_work(?,?,?,?)]]>
+  </sql>
+  <sql id="SQL100031" cmd="select" type="sp">
+    <![CDATA[sp_qry_user_profile(?)]]>
+  </sql>
+  <sql id="SQL100032" cmd="select" type="sp">
+    <![CDATA[sp_qry_username_exist(?)]]>
+  </sql>
+  <sql id="SQL100033" cmd="select" type="sp">
+    <![CDATA[sp_qry_nickname_exist(?)]]>
+  </sql>
+  <sql id="SQL100034" cmd="select" type="sp">
+    <![CDATA[sp_qry_email_exist(?)]]>
+  </sql>
+  <sql id="SQL100035" cmd="select" type="sp">
+    <![CDATA[sp_qry_user_passwd(?,?,?)]]>
+  </sql>
+</mysql>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="SeSDK" default="sesdk" basedir=".">
+    <description>SeSDK Build File</description>
+    <property name="src" location="src" />
+    <property name="lib" location="lib" />
+	<property name="libsrc" location="libsrc" />
+    <property name="bin" location="bin" />
+	  <property name="builtby" value="LiJun" />
+	  <property name="jarfile" value="sesdk.jar" />
+	  <property name="basesrc" value="**/com/seshenghuo" />
+	<property name="jservice" value="/data/wwwroot/seshenghuo/jservice" />
+	<property name="weblib" value="${jservice}/WEB-INF/lib" />
+	  
+	  <tstamp />
+	  <path id="lib">
+	  	<fileset dir="${lib}">
+	  		<include name="*.jar" />
+	  		<include name="${java.home}/jre/lib/ext/jfxrt.jar" />
+	  	</fileset>
+	  	<fileset dir="${libsrc}">
+            <include name="apache-mina-2.0.7/dist/mina-core-2.0.7.jar" />
+            <include name="slf4j-1.7.6/slf4j-api-1.7.6.jar" />
+            <include name="slf4j-1.7.6/slf4j-nop-1.7.6.jar" />
+        </fileset>
+	  </path>
+	
+    <target name="sesdk" depends="compile,build.sesdk,build.web,clean" description="sesdk target">    
+        <echo>Building JAR files done...</echo>
+    </target>
+	
+    <target name="compile" depends="create" description="compile the source">
+    	<echo>make bin dir and compile</echo>
+    	      <mkdir  dir="${bin}" /> 
+    	  <javac srcdir="${src}" destdir="${bin}">
+    	  	<classpath refid="lib" />
+    	  </javac>
+
+        <delete file="${lib}/${jarfile}" />
+    	  <delete>
+    	  	<fileset dir="${bin}">
+    	  		<include name="*.properties" />
+    	  		<include name="*.xml" />
+    	  	</fileset>
+    	  </delete>
+    	  <delete>
+          <fileset dir="${lib}">
+            <include name="*.properties" />
+            <include name="*.xml" />
+          </fileset>
+        </delete>
+
+      	<copy todir="${lib}">
+          <fileset dir="${src}">
+          	<exclude name="mina*.properties"/>
+            <include name="*.properties" />
+            <include name="*.xml" />
+          </fileset>
+        </copy>
+    </target>
+	
+    <target name="build.sesdk" description="build.sesdk">
+    	<echo>build sesdk</echo>
+      <jar destfile="${lib}/${jarfile}" update="true">
+  	     <fileset dir="${bin}">
+  	       <exclude name="${basesrc}/test/**" />
+  	     	 <exclude name="${basesrc}/mina/**" />
+  	     	 <exclude name="${basesrc}/jfx/mina/**" />
+  	     </fileset>        	 
+      	 <manifest>
+          <attribute name="Built-By" value="${builtby}" />
+      	 	<attribute name="Built-Date" value="${TODAY}" />  
+        </manifest> 
+  	  </jar>
+    </target>
+    
+	<target name="build.web" description="build web libs">
+        <echo>Build Web Libs.</echo>
+        <delete>          
+          <fileset dir="${weblib}">
+            <include name="${jarfile}" />
+          </fileset>            
+        </delete>
+        
+        <copy todir="${weblib}">          
+          <fileset dir="${lib}">
+            <include name="${jarfile}"/>
+          </fileset>
+        </copy> 
+    </target>
+	
+    <target name="create" description="create project dirs">
+       <mkdir dir="${bin}" />
+    </target>
+    
+    <target name="clean" description="clean up">
+      <echo>delete the bin dir</echo>
+      <delete dir="${bin}" />     
+    </target>
+</project>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="MINA.FSC" default="mina.fsc" basedir=".">
+    <description>SeSDK Build File</description>
+    <property name="src" location="src" />
+    <property name="lib" location="lib" />
+	<property name="libsrc" location="libsrc" />
+    <property name="bin" location="bin" />
+	  <property name="builtby" value="LiJun" />
+	  <property name="basesrc" value="**/com/seshenghuo" />
+	  <property name="mina.fsc" value="mina/fileclient" />
+	<property name="mina.fsc.src" value="${mina.fsc}/src" />
+	  <property name="mina.fsc.lib" value="${mina.fsc}/lib" />
+	  <property name="mina.fsc.bin" value="${mina.fsc}/bin" />
+	  <property name="mina.fsc.logs" value="${mina.fsc}/logs" />
+	  <property name="mina.fsc.jarfile" value="mina.fsc.jar" />
+	  <property name="mina.fsc.main" value="com.seshenghuo.jfx.mina.FileClientUI" />
+	  
+	  <tstamp />
+	
+	  <path id="lib">
+	  	<fileset dir="${lib}">
+	  		<include name="*.jar" />
+	  		<include name="${java.home}\jre\lib\jfxrt.jar" />
+	  	</fileset>
+	  	<fileset dir="${libsrc}">
+	  		<include name="apache-mina-2.0.7/dist/mina-core-2.0.7.jar" />
+            <include name="slf4j-1.7.6/slf4j-api-1.7.6.jar" />
+            <include name="slf4j-1.7.6/slf4j-nop-1.7.6.jar" />
+        </fileset>
+	  </path>
+	
+    <target name="mina.fsc" depends="compile,build.mina.fsc,clean" description="mina.fsc target">    
+        <echo>Building JAR files done...</echo>
+    </target>
+	
+    <target name="compile" depends="create" description="compile the source">
+    	<echo>make bin dir and compile</echo>
+    	      <mkdir  dir="${bin}" /> 
+    	  <javac srcdir="${src}" destdir="${bin}">
+    	  	<classpath refid="lib" />
+    	  </javac>
+
+    	  <delete file="${mina.fsc.lib}/${mina.fsc.jarfile}" />
+
+    	  <copy todir="${mina.fsc.lib}">
+    	  	<fileset dir="${src}">
+  	            <include name="mina_client.properties" />
+    	  		<include name="mina_codec.properties" />
+  	            <include name="log4j.properties" />            
+  	          </fileset>
+    	  	  <fileset dir="${libsrc}/apache-mina-2.0.7/dist">
+  	            <include name="mina-core-2.0.7.jar" />
+  	          </fileset>
+  	          <fileset dir="${libsrc}/slf4j-1.7.6">
+  	            <include name="slf4j-api-1.7.6.jar" />
+  	            <include name="slf4j-nop-1.7.6.jar" />
+  	          </fileset>
+  	          <fileset dir="${lib}">
+  	            <include name="log4j-1.2.14.jar" />
+  	          </fileset>
+        </copy>
+    	<copy todir="${mina.fsc.src}">
+            <fileset dir="${src}">
+               <include name="${basesrc}/mina/MinaClientConfig.java" />
+               <include name="${basesrc}/mina/MinaCodecConfig.java" />
+	           <include name="${basesrc}/mina/fs/Commands.java" />
+	           <include name="${basesrc}/mina/fs/FileEntity.java" />
+	           <include name="${basesrc}/mina/fs/FileClient.java" />
+	           <include name="${basesrc}/mina/fs/RemainingNotify.java" />
+	           <include name="${basesrc}/mina/fs/codec/**" />
+	           <include name="${basesrc}/jfx/mina/FileClientUI**" />
+	           <include name="${basesrc}/jfx/mina/FileInfo.java" />
+	           <include name="${basesrc}/logger/L.java" />
+	           <include name="${basesrc}/util/Util.java" />
+	             <include name="${basesrc}/util/PropertiesUtil.java" />
+	           <include name="${basesrc}/util/Convert.java" />            
+             </fileset>
+        </copy>
+    </target>
+
+	  <target name="build.mina.fsc" description="build.mina.fsc">
+	  	<echo>build the file server client</echo>
+      <jar destfile="${mina.fsc.lib}/${mina.fsc.jarfile}" update="true">
+         <fileset dir="${bin}">
+           <include name="${basesrc}/mina/MinaClientConfig.class" />
+           <include name="${basesrc}/mina/MinaCodecConfig.class" />
+           <include name="${basesrc}/mina/fs/Commands.class" />
+           <include name="${basesrc}/mina/fs/FileEntity.class" />
+           <include name="${basesrc}/mina/fs/FileClient.class" />
+           <include name="${basesrc}/mina/fs/RemainingNotify.class" />
+           <include name="${basesrc}/mina/fs/codec/**" />
+           <include name="${basesrc}/jfx/mina/FileClientUI**" />
+           <include name="${basesrc}/jfx/mina/FileInfo.class" />
+           <include name="${basesrc}/logger/L.class" />
+           <include name="${basesrc}/util/Util.class" />
+         	 <include name="${basesrc}/util/PropertiesUtil.class" />
+           <include name="${basesrc}/util/Convert.class" />             
+         </fileset>
+         <manifest>  
+           <attribute name="Built-By" value="${builtby}" />
+           <attribute name="Built-Date" value="${TODAY}" />
+           <attribute name="Main-Class" value="${mina.fsc.main}" />
+         </manifest> 
+      </jar>
+    </target>
+    
+    <target name="create" description="create project dirs">
+  	  <mkdir dir="${bin}" />
+  	  <mkdir dir="${mina.fsc}" />
+    	<mkdir dir="${mina.fsc.src}" />
+      <mkdir dir="${mina.fsc.lib}" />
+      <mkdir dir="${mina.fsc.bin}" />
+      <mkdir dir="${mina.fsc.logs}" />
+    </target>
+    
+    <target name="clean" description="clean up">
+      <echo>delete the bin dir</echo>
+      <delete dir="${bin}" />        
+    </target>
+</project>
